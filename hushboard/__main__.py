@@ -9,8 +9,8 @@ from . import pulsectl
 gi.require_version('Gtk', '3.0')
 from gi.repository import GObject, Gtk, GLib, GdkPixbuf
 
-gi.require_version('AppIndicator3', '0.1')
-from gi.repository import AppIndicator3 as AppIndicator
+gi.require_version('AyatanaAppIndicator3', '0.1')
+from gi.repository import AyatanaAppIndicator3 as AyatanaAppIndicator
 
 from Xlib import X, display
 from Xlib.ext import record
@@ -169,10 +169,10 @@ class HushboardIndicator(GObject.GObject):
         self.paused_icon = os.path.abspath(os.path.join(icon_path, "paused-symbolic.svg"))
         self.app_icon = os.path.abspath(os.path.join(local_icon_path, "hushboard.svg"))
 
-        self.ind = AppIndicator.Indicator.new(
+        self.ind = AyatanaAppIndicator.Indicator.new(
             APP_ID, self.unmuted_icon,
-            AppIndicator.IndicatorCategory.HARDWARE)
-        self.ind.set_status(AppIndicator.IndicatorStatus.ACTIVE)
+            AyatanaAppIndicator.IndicatorCategory.HARDWARE)
+        self.ind.set_status(AyatanaAppIndicator.IndicatorStatus.ACTIVE)
         self.ind.set_attention_icon_full(self.muted_icon, "muted")
         self.ind.set_title(APP_NAME)
 
@@ -214,7 +214,7 @@ class HushboardIndicator(GObject.GObject):
 
     def key_pressed(self, *args):
         if self.mpaused.get_active(): return
-        self.ind.set_status(AppIndicator.IndicatorStatus.ATTENTION)
+        self.ind.set_status(AyatanaAppIndicator.IndicatorStatus.ATTENTION)
         if self.unmute_timer:
             GLib.source_remove(self.unmute_timer)
         else:
@@ -227,7 +227,7 @@ class HushboardIndicator(GObject.GObject):
         GLib.timeout_add_seconds(1, lambda *args: Gtk.main_quit())
 
     def unmute(self):
-        self.ind.set_status(AppIndicator.IndicatorStatus.ACTIVE)
+        self.ind.set_status(AyatanaAppIndicator.IndicatorStatus.ACTIVE)
         self.unmute_timer = None
         self.queue.put_nowait({"op": "unmute"})
 
