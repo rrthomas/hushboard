@@ -1,0 +1,35 @@
+[project]
+name = "hushboard"
+version = "0.0.1"
+description = "Mute your mic while you're typing"
+license = "MIT"
+authors = [
+    {name = "Stuart Langridge", email = "sil@kryogenix.com"}
+]
+readme = "README.md"
+urls = {Homepage = "https://github.com/stuartlangridge/hushboard"}
+requires-python = ">= 3.10"
+dependencies = [
+    "pygobject",
+    "xlib",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: End Users/Desktop",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Unix",
+]
+
+[project.scripts]
+hushboard = "hushboard.__main__:main"
+
+[build-system]
+requires = ["build", "setuptools"]
+
+[tool.setuptools]
+packages = ["hushboard"]
+
+[tool.setuptools.package-data]
+hushboard = ["hushboard/icons/*.svg"]
